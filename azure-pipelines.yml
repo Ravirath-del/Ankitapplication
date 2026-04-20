@@ -6,9 +6,19 @@ stages:
   jobs:
   - job: 
     steps:
+    # - task: PowerShell@2
+    #   displayName: lint (Biome)
+    #   inputs:
+    #     targetType: 'inline'
+    #     script: 'C:\Tools\biome.exe lint $(System.DefaultWorkingDirectory)/'
     - task: PowerShell@2
-      displayName: lint (Biome)
       inputs:
         targetType: 'inline'
-        script: 'C:\Tools\biome.exe lint $(System.DefaultWorkingDirectory)'
-    
+        script: |
+          - powershell: |
+              $biomeUrl = "https://github.com/biomejs/biome/releases/download/%40biomejs%2Fbiome%402.4.12/biome-win32-x64.exe"
+              $biomePath = "C:\agent\_work\biome.exe"
+          
+              Invoke-WebRequest -Uri $biomeUrl -OutFile $biomePath
+              & $biomePath check .
+            displayName: Run Biome Linter
