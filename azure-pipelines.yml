@@ -1,5 +1,7 @@
 trigger: none
 pool: Ankitpool
+variables:
+- group: fuddu_group
 stages:
 - stage: scanstage
   displayName: scan chal raha hai
@@ -27,4 +29,4 @@ stages:
         targetType: 'inline'
         script: |
           npm install -g @sonar/scan
-          sonar -D sonar.host.url=http://localhost:9000 -D sonar.token=sqp_f1daea8dde6fbf1192708da580f5ead24f8b4872 -D sonar.projectKey=Ankit_application
+          sonar -D sonar.host.url=http://localhost:9000 -D sonar.token=$(sonar_token) -D sonar.projectKey=Ankit_application
