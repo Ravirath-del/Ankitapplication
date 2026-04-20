@@ -18,3 +18,13 @@ stages:
           Invoke-WebRequest -Uri "https://github.com/biomejs/biome/releases/download/%40biomejs%2Fbiome%402.3.11/biome-win32-x64.exe" -OutFile "$(Agent.ToolsDirectory)\biome.exe"
 
            & "$(Agent.ToolsDirectory)\biome.exe" lint "$(System.DefaultWorkingDirectory)"
+- stage: sonarqube
+  jobs:
+  - job: 
+    steps:
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: |
+          npm install -g @sonar/scan
+          sonar -D sonar.host.url=http://localhost:9000 -D sonar.token=sqp_f1daea8dde6fbf1192708da580f5ead24f8b4872 -D sonar.projectKey=Ankit_application
