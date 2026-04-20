@@ -1,0 +1,14 @@
+trigger: none
+pool: Ankitpool
+stages:
+- stage: scanstage
+  displayName: scan chal raha hai
+  jobs:
+  - job: 
+    steps:
+    - task: PowerShell@2
+      displayName: lint (Biome)
+      inputs:
+        targetType: 'inline'
+        script: 'C:\Tools\biome.exe lint $(System.DefaultWorkingDirectory)'
+    
