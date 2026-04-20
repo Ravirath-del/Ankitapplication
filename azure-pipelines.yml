@@ -16,9 +16,6 @@ stages:
         targetType: 'inline'
         script: |
           - powershell: |
-              $biomeUrl = "https://github.com/biomejs/biome/releases/download/%40biomejs%2Fbiome%402.4.12/biome-win32-x64.exe"
-              $biomePath = "C:\agent\_work\biome.exe"
-          
-              Invoke-WebRequest -Uri $biomeUrl -OutFile $biomePath
-              & $biomePath check .
-            displayName: Run Biome Linter
+              Invoke-WebRequest -Uri "https://github.com/biomejs/biome/releases/download/%40biomejs%2Fbiome%402.3.11/biome-win32-x64.exe" -OutFile "$(Agent.ToolsDirectory)\biome.exe"   
+              & "$(Agent.ToolsDirectory)\biome.exe" lint "$(System.DefaultWorkingDirectory)"
+            displayName: Install & Run Biome Linter
