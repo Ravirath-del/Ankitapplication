@@ -1,7 +1,16 @@
 trigger: none
 pool: Ankitpool
+parameters:
+- name: environment
+  type: string
+  default: dev
+  values:
+  - dev
+  - QA
+  - Prod
 variables:
 - group: fuddu_group
+
 stages:
 - stage: scanstage
   displayName: scan chal raha hai
