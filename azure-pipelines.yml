@@ -22,10 +22,9 @@ stages:
       inputs:
         nodeVersion: '6'
     - task: PowerShell@2
-      displayName: build artifact
       inputs:
         targetType: 'inline'
         script: |
           npm install
           npm run build
-    
+        workingDirectory: '$(System.DefaultWorkingDirectory)'
