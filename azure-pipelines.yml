@@ -28,3 +28,8 @@ stages:
           npm install
           npm run build
         workingDirectory: '$(System.DefaultWorkingDirectory)'
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Pipeline.Workspace)'
+        artifact: 'Ankitartifact'
+        publishLocation: 'pipeline'
