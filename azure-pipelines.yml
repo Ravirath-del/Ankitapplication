@@ -43,3 +43,10 @@ stages:
         downloadType: 'single'
         artifactName: 'drop'
         downloadPath: '$(System.ArtifactsDirectory)/Ankit'
+    - task: CopyFilesOverSSH@0
+      inputs:
+        sshEndpoint: 'vm_connection'
+        sourceFolder: '$(System.ArtifactsDirectory)/Ankit'
+        contents: '**'
+        targetFolder: '/home/rferhari'
+        readyTimeout: '20000'
