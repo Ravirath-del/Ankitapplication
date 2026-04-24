@@ -26,4 +26,4 @@ stages:
         script: |
           npm install
           npm run build
-        workingDirectory: '$(System.DefaultWorkingDirectory)/src'
+        workingDirectory: '$(System.DefaultWorkingDirectory)'
