@@ -53,5 +53,5 @@ stages:
       inputs:
         sshEndpoint: 'vm_connection'
         runOptions: 'commands'
-        commands: 'scp -r /home/rferhari/* /var/www/html'
+        commands: 'sudo cp -r /home/rferhari/* /var/www/html'
         readyTimeout: '20000'
