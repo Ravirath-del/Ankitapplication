@@ -28,25 +28,24 @@ stages:
           npm install
           npm run build
         workingDirectory: '$(System.DefaultWorkingDirectory)'
-    - task: PublishBuildArtifacts@1
+    - task: PublishPipelineArtifact@1
       inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: 'drop'
-        publishLocation: 'Container'
+        targetPath: '$(System.DefaultWorkingDirectory)/build'
+        artifact: 'drop'
+        publishLocation: 'pipeline'
 - stage: ContinueDeploy
   jobs:
   - job: 
     steps:
-    - task: DownloadBuildArtifacts@1
+    - task: DownloadPipelineArtifact@2
       inputs:
         buildType: 'current'
-        downloadType: 'single'
         artifactName: 'drop'
-        downloadPath: '$(System.ArtifactsDirectory)/Ankit'
+        targetPath: '$(System.DefaultWorkingDirectory)/build_artifact'
     - task: CopyFilesOverSSH@0
       inputs:
         sshEndpoint: 'vm_connection'
-        sourceFolder: '$(System.ArtifactsDirectory)/Ankit'
+        sourceFolder: '$(System.DefaultWorkingDirectory)/build_artifact'
         contents: '**'
         targetFolder: '/home/rferhari'
         readyTimeout: '20000'
