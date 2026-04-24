@@ -1,27 +1,11 @@
 trigger: none
 pool: Ankitpool
-parameters:
-- name: environment
-  type: string
-  default: dev
-  values:
-  - dev
-  - QA
-  - Prod
-variables:
-- group: fuddu_group
-
 stages:
 - stage: scanstage
   displayName: scan chal raha hai
   jobs:
   - job: 
     steps:
-    # - task: PowerShell@2
-    #   displayName: lint (Biome)
-    #   inputs:
-    #     targetType: 'inline'
-    #     script: 'C:\Tools\biome.exe lint $(System.DefaultWorkingDirectory)/'
     - task: PowerShell@2
       inputs:
         targetType: 'inline'
@@ -29,13 +13,19 @@ stages:
           Invoke-WebRequest -Uri "https://github.com/biomejs/biome/releases/download/%40biomejs%2Fbiome%402.3.11/biome-win32-x64.exe" -OutFile "$(Agent.ToolsDirectory)\biome.exe"
 
            & "$(Agent.ToolsDirectory)\biome.exe" lint "$(System.DefaultWorkingDirectory)"
-- stage: sonarqube
+- stage: buildstage
   jobs:
-  - job: 
+  - job: buildjob
     steps:
+    - task: NodeTaskRunnerInstaller@0
+      displayName: node install
+      inputs:
+        nodeVersion: '6'
     - task: PowerShell@2
+      displayName: build artifact
       inputs:
         targetType: 'inline'
         script: |
-          npm install -g @sonar/scan
-          sonar -D sonar.host.url=http://localhost:9000 -D sonar.token=$(sonar_token) -D sonar.projectKey=Ankit_application
+          npm install
+          npm run build
+    
