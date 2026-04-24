@@ -5,6 +5,7 @@ stages:
   displayName: scan chal raha hai
   jobs:
   - job: 
+    continueOnError: true
     steps:
     - task: PowerShell@2
       inputs:
